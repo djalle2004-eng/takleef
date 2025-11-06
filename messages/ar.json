@@ -1,0 +1,478 @@
+{
+  "common": {
+    "save": "حفظ",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "cancel": "إلغاء",
+    "search": "بحث",
+    "close": "إغلاق",
+    "submit": "إرسال",
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "success": "نجح",
+    "welcome": "أهلاً بك",
+    "yes": "نعم",
+    "no": "لا",
+    "confirm": "تأكيد",
+    "back": "رجوع",
+    "next": "التالي",
+    "add": "إضافة",
+    "view": "عرض",
+    "download": "تحميل",
+    "upload": "رفع",
+    "export": "تصدير",
+    "import": "استيراد",
+    "filter": "تصفية",
+    "refresh": "تحديث"
+  },
+  
+  "auth": {
+    "signIn": {
+      "title": "تسجيل الدخول إلى منصة تكليف",
+      "subtitle": "الرجاء إدخال بيانات اعتمادك",
+      "emailLabel": "البريد الإلكتروني المهني",
+      "emailPlaceholder": "professor@university.dz",
+      "passwordLabel": "كلمة المرور",
+      "passwordPlaceholder": "أدخل كلمة المرور",
+      "signInButton": "دخول",
+      "noAccount": "ليس لديك حساب؟",
+      "createAccount": "إنشاء حساب جديد",
+      "forgotPassword": "نسيت كلمة المرور؟"
+    },
+    "signUp": {
+      "title": "إنشاء حساب جديد",
+      "subtitle": "انضم إلى منصة تكليف",
+      "emailLabel": "البريد الإلكتروني الجامعي",
+      "emailHint": "فقط عناوين البريد الإلكتروني @univ-eloued.dz مقبولة",
+      "passwordLabel": "كلمة المرور",
+      "passwordHint": "يجب أن تكون 8 أحرف على الأقل",
+      "confirmPasswordLabel": "تأكيد كلمة المرور",
+      "signUpButton": "إنشاء حساب",
+      "hasAccount": "لديك حساب؟",
+      "signInLink": "تسجيل الدخول"
+    },
+    "errors": {
+      "invalidEmail": "البريد الإلكتروني غير صالح",
+      "invalidCredentials": "بيانات الاعتماد غير صحيحة",
+      "emailRequired": "البريد الإلكتروني مطلوب",
+      "passwordRequired": "كلمة المرور مطلوبة",
+      "weakPassword": "كلمة المرور ضعيفة جداً",
+      "emailExists": "البريد الإلكتروني مستخدم بالفعل",
+      "passwordMismatch": "كلمات المرور غير متطابقة"
+    },
+    "signOut": "تسجيل الخروج"
+  },
+
+  "profile": {
+    "title": "إكمال الملف الشخصي",
+    "subtitle": "الرجاء ملء معلوماتك الشخصية",
+    "personalInfo": "المعلومات الشخصية",
+    "contactInfo": "معلومات الاتصال",
+    "academicInfo": "المعلومات الأكاديمية",
+    "fields": {
+      "fullNameArabic": "الاسم واللقب (بالعربية)",
+      "fullNameLatin": "الاسم واللقب (باللاتينية)",
+      "academicRank": "الرتبة العلمية",
+      "department": "القسم",
+      "professionalEmail": "البريد الإلكتروني المهني",
+      "personalEmail": "البريد الإلكتروني الشخصي",
+      "primaryPhone": "رقم الهاتف الرئيسي",
+      "secondaryPhone": "رقم الهاتف الثانوي",
+      "phdSpecialization": "تخصص الدكتوراه",
+      "researchField": "مجال البحث"
+    },
+    "placeholders": {
+      "fullNameArabic": "مثال: أحمد بن محمد",
+      "fullNameLatin": "Example: Ahmed Ben Mohamed",
+      "phone": "+213 555 123 456"
+    },
+    "ranks": {
+      "professor": "أستاذ",
+      "masterA": "أستاذ محاضر أ",
+      "masterB": "أستاذ محاضر ب",
+      "assistantA": "أستاذ مساعد أ",
+      "assistantB": "أستاذ مساعد ب"
+    },
+    "departments": {
+      "economics": "قسم العلوم الاقتصادية",
+      "finance": "قسم العلوم المالية والمحاسبة",
+      "management": "قسم علوم التسيير",
+      "commercial": "قسم العلوم التجارية",
+      "common": "قسم الجذع المشترك"
+    },
+    "saveButton": "حفظ المعلومات",
+    "updateButton": "تحديث المعلومات",
+    "successMessage": "تم حفظ المعلومات بنجاح",
+    "errorMessage": "فشل في حفظ المعلومات"
+  },
+
+  "dashboard": {
+    "title": "لوحة التحكم",
+    "welcome": "مرحباً",
+    "welcomeMessage": "أهلاً بك في لوحة التحكم الخاصة بك",
+    "quickActions": "إجراءات سريعة",
+    "cards": {
+      "teachingPreferences": {
+        "title": "تفضيلات التدريس",
+        "description": "اختر المقاييس المفضلة لديك"
+      },
+      "reports": {
+        "title": "التقارير",
+        "description": "إنشاء تقارير تحليلية"
+      },
+      "profile": {
+        "title": "الملف الشخصي",
+        "description": "عرض معلوماتك"
+      }
+    },
+    "profileInfo": {
+      "title": "معلومات الملف الشخصي",
+      "academicRank": "الرتبة العلمية",
+      "department": "القسم",
+      "professionalEmail": "البريد المهني",
+      "personalEmail": "البريد الشخصي",
+      "primaryPhone": "الهاتف الرئيسي",
+      "secondaryPhone": "الهاتف الثانوي",
+      "phdSpecialization": "تخصص الدكتوراه",
+      "researchField": "مجال البحث"
+    }
+  },
+
+  "adminNav": {
+    "adminPanel": "لوحة الإدارة",
+    "dashboard": "لوحة التحكم الرئيسية",
+    "academicYears": "إدارة السنوات الجامعية",
+    "modules": "إدارة المقاييس",
+    "users": "إدارة المستخدمين",
+    "preferences": "عرض التفضيلات",
+    "reports": "التقارير والإحصائيات",
+    "switchToProfessor": "التبديل إلى وضع الأستاذ",
+    "switchToAdmin": "التبديل إلى وضع المدير"
+  },
+
+  "adminDashboard": {
+    "title": "لوحة التحكم الإدارية",
+    "academicYear": "السنة الجامعية",
+    "noActiveYear": "لا توجد سنة جامعية نشطة",
+    "statistics": {
+      "totalProfessors": "إجمالي الأساتذة",
+      "totalModules": "إجمالي المقاييس",
+      "active": "نشط",
+      "totalPreferences": "إجمالي التفضيلات",
+      "recentActivity": "النشاط الأخير",
+      "last7Days": "آخر 7 أيام"
+    },
+    "charts": {
+      "preferencesByType": "التفضيلات حسب نوع التدريس",
+      "mostRequestedModules": "المقاييس الأكثر طلباً",
+      "professorsByDepartment": "الأساتذة حسب القسم"
+    },
+    "quickActions": {
+      "title": "إجراءات سريعة",
+      "manageProfessors": "إدارة الأساتذة",
+      "manageProfessorsDesc": "إضافة، تعديل، أو حذف الأساتذة",
+      "manageModules": "إدارة المقاييس",
+      "manageModulesDesc": "عمليات CRUD على المقاييس",
+      "viewPreferences": "عرض التفضيلات",
+      "viewPreferencesDesc": "مراجعة تفضيلات الأساتذة",
+      "academicYears": "السنوات الجامعية",
+      "academicYearsDesc": "إدارة السنوات الجامعية"
+    },
+    "reportsCard": {
+      "title": "التقارير والإحصائيات",
+      "description": "إنشاء تقارير شاملة مع حمل التدريس، حالة التغطية، وإحصائيات الأقسام"
+    }
+  },
+
+  "modules": {
+    "title": "إدارة المقاييس",
+    "subtitle": "إدارة الأقسام، التخصصات، والمقاييس",
+    "departments": "الأقسام",
+    "specialties": "التخصصات",
+    "modules": "المقاييس",
+    "addDepartment": "إضافة قسم جديد",
+    "addSpecialty": "إضافة تخصص جديد",
+    "addModule": "إضافة مقياس جديد",
+    "editDepartment": "تعديل القسم",
+    "editSpecialty": "تعديل التخصص",
+    "editModule": "تعديل المقياس",
+    "deleteDepartment": "حذف القسم",
+    "deleteSpecialty": "حذف التخصص",
+    "deleteModule": "حذف المقياس",
+    "confirmDelete": "هل أنت متأكد من الحذف؟",
+    "fields": {
+      "departmentName": "اسم القسم",
+      "specialtyName": "اسم التخصص",
+      "moduleName": "اسم المقياس",
+      "studyLevel": "المستوى الدراسي",
+      "semester": "الفصل الدراسي",
+      "isActive": "نشط"
+    },
+    "levels": {
+      "common": "جذع مشترك",
+      "license": "ليسانس",
+      "master": "ماستر"
+    },
+    "semesters": {
+      "s1": "الفصل الأول",
+      "s2": "الفصل الثاني",
+      "s3": "الفصل الثالث",
+      "s4": "الفصل الرابع",
+      "s5": "الفصل الخامس",
+      "s6": "الفصل السادس"
+    },
+    "selectSemester": "-- اختر الفصل الدراسي --",
+    "noModules": "لا توجد مقاييس",
+    "importFromExcel": "استيراد من Excel",
+    "bulkOperations": "عمليات جماعية"
+  },
+
+  "users": {
+    "title": "إدارة المستخدمين",
+    "subtitle": "إدارة الأساتذة وحساباتهم",
+    "addUser": "إضافة مستخدم",
+    "importFromExcel": "استيراد من Excel",
+    "table": {
+      "name": "الاسم",
+      "department": "القسم",
+      "email": "البريد الإلكتروني",
+      "professionalEmail": "البريد المهني",
+      "rank": "الرتبة",
+      "status": "الحالة",
+      "actions": "الإجراءات",
+      "active": "نشط",
+      "inactive": "غير نشط"
+    },
+    "actions": {
+      "view": "عرض",
+      "edit": "تعديل",
+      "delete": "حذف",
+      "activate": "تفعيل",
+      "deactivate": "تعطيل",
+      "toggleStatus": "تبديل الحالة"
+    },
+    "viewModal": {
+      "title": "تفاصيل المستخدم",
+      "accountInfo": "معلومات الحساب",
+      "email": "البريد الإلكتروني",
+      "role": "الدور",
+      "status": "الحالة",
+      "createdAt": "تاريخ الإنشاء"
+    },
+    "editModal": {
+      "title": "تعديل المستخدم",
+      "saveChanges": "حفظ التغييرات"
+    },
+    "deleteConfirm": "هل أنت متأكد من حذف هذا المستخدم؟",
+    "import": {
+      "title": "استيراد الأساتذة من Excel",
+      "downloadTemplate": "تحميل النموذج",
+      "uploadFile": "رفع ملف Excel",
+      "clickToUpload": "انقر لرفع ملف Excel",
+      "importing": "جاري الاستيراد...",
+      "importProfessors": "استيراد الأساتذة",
+      "results": "نتائج الاستيراد",
+      "success": "نجح",
+      "failed": "فشل",
+      "errors": "الأخطاء"
+    }
+  },
+
+  "preferences": {
+    "title": "تفضيلات التدريس",
+    "subtitle": "اختر المقاييس المفضلة مع الأولوية ونوع التدريس",
+    "selectYear": "اختر السنة الجامعية",
+    "selectLevel": "اختر المستوى الدراسي",
+    "selectSpecialty": "اختر التخصص",
+    "selectModule": "اختر المقياس",
+    "steps": {
+      "step1": "الخطوة 1: اختر السنة الجامعية",
+      "step2": "الخطوة 2: اختر المستوى الدراسي",
+      "step3": "الخطوة 3: اختر التخصص",
+      "step4": "الخطوة 4: اختر المقياس وأضف التفضيل"
+    },
+    "table": {
+      "priority": "الأولوية",
+      "module": "المقياس",
+      "specialty": "التخصص",
+      "semester": "الفصل",
+      "teachingType": "نوع التدريس",
+      "actions": "الإجراءات"
+    },
+    "teachingTypes": {
+      "lecture": "محاضرة فقط",
+      "tutorial": "أعمال موجهة فقط",
+      "both": "كلاهما معًا"
+    },
+    "addPreference": "إضافة تفضيل",
+    "priorityLabel": "الأولوية",
+    "teachingTypeLabel": "نوع التدريس",
+    "savePreference": "حفظ التفضيل",
+    "deleteConfirm": "هل أنت متأكد من حذف هذا التفضيل؟",
+    "noPreferences": "لم تقم بإضافة أي تفضيلات بعد",
+    "startAdding": "ابدأ بإضافة تفضيلاتك",
+    "successAdd": "تم إضافة التفضيل بنجاح",
+    "successDelete": "تم حذف التفضيل بنجاح",
+    "errorAdd": "فشل في إضافة التفضيل",
+    "errorDelete": "فشل في حذف التفضيل",
+    "duplicatePriority": "الأولوية مستخدمة بالفعل",
+    "duplicateModule": "المقياس مضاف بالفعل"
+  },
+
+  "viewPreferences": {
+    "title": "عرض التفضيلات",
+    "subtitle": "مراجعة تفضيلات الأساتذة",
+    "selectYear": "اختر السنة الجامعية",
+    "tabs": {
+      "byProfessor": "حسب الأستاذ",
+      "byModule": "حسب المقياس"
+    },
+    "exportExcel": "تصدير إلى Excel",
+    "byProfessor": {
+      "title": "التفضيلات حسب الأستاذ",
+      "professorName": "اسم الأستاذ",
+      "department": "القسم",
+      "totalPreferences": "عدد التفضيلات",
+      "viewDetails": "عرض التفاصيل"
+    },
+    "byModule": {
+      "title": "التفضيلات حسب المقياس",
+      "moduleName": "اسم المقياس",
+      "specialty": "التخصص",
+      "semester": "الفصل",
+      "professorCount": "عدد الأساتذة",
+      "viewDetails": "عرض التفاصيل"
+    },
+    "details": {
+      "professorPreferences": "تفضيلات الأستاذ",
+      "moduleRequests": "طلبات المقياس"
+    },
+    "noData": "لا توجد بيانات متاحة"
+  },
+
+  "reports": {
+    "title": "التقارير والإحصائيات",
+    "subtitle": "إنشاء تقارير شاملة مع خيارات التصدير",
+    "selectReport": "اختر نوع التقرير",
+    "filters": {
+      "title": "المرشحات",
+      "show": "إظهار المرشحات",
+      "hide": "إخفاء المرشحات",
+      "academicYear": "السنة الجامعية",
+      "allYears": "جميع السنوات",
+      "department": "القسم",
+      "allDepartments": "جميع الأقسام",
+      "professorId": "معرف الأستاذ",
+      "enterProfessorId": "أدخل معرف الأستاذ"
+    },
+    "types": {
+      "teachingLoad": {
+        "title": "حمل التدريس لكل أستاذ",
+        "description": "عرض توزيع عبء العمل على الأساتذة"
+      },
+      "subjectCoverage": {
+        "title": "حالة تغطية المقاييس",
+        "description": "التحقق من المقاييس المغطاة بواسطة الأساتذة"
+      },
+      "departmentStats": {
+        "title": "إحصائيات الأقسام",
+        "description": "مقارنة الإحصائيات عبر الأقسام"
+      },
+      "historical": {
+        "title": "مقارنة البيانات التاريخية",
+        "description": "مقارنة البيانات عبر السنوات الأكاديمية"
+      }
+    },
+    "export": {
+      "title": "خيارات التصدير",
+      "pdf": "PDF",
+      "excel": "Excel",
+      "print": "طباعة",
+      "email": "بريد إلكتروني"
+    },
+    "teachingLoad": {
+      "title": "حمل التدريس لكل أستاذ",
+      "professor": "الأستاذ",
+      "department": "القسم",
+      "rank": "الرتبة",
+      "lectures": "المحاضرات",
+      "tutorials": "الأعمال الموجهة",
+      "both": "كلاهما",
+      "total": "المجموع",
+      "noData": "لا توجد بيانات حمل التدريس"
+    },
+    "subjectCoverage": {
+      "title": "حالة تغطية المقاييس",
+      "summary": "الملخص",
+      "totalModules": "إجمالي المقاييس",
+      "covered": "مغطاة",
+      "uncovered": "غير مغطاة",
+      "coverage": "التغطية",
+      "module": "المقياس",
+      "professors": "الأساتذة",
+      "status": "الحالة",
+      "coveredStatus": "مغطى",
+      "uncoveredStatus": "غير مغطى",
+      "noData": "لا توجد بيانات تغطية المقاييس"
+    },
+    "departmentStats": {
+      "title": "إحصائيات الأقسام",
+      "department": "القسم",
+      "professors": "الأساتذة",
+      "modules": "المقاييس",
+      "activeModules": "المقاييس النشطة",
+      "preferences": "التفضيلات",
+      "activeProfessors": "الأساتذة النشطون",
+      "noData": "لا توجد إحصائيات الأقسام"
+    },
+    "historical": {
+      "comingSoon": "قريباً...",
+      "description": "سيتيح لك هذا مقارنة البيانات عبر عدة سنوات أكاديمية"
+    },
+    "loading": "جاري تحميل التقرير...",
+    "error": "خطأ في تحميل التقرير",
+    "errorMessage": "يرجى التحقق من المرشحات والمحاولة مرة أخرى",
+    "generatePrompt": "اختر سنة أكاديمية وانقر لإنشاء التقرير"
+  },
+
+  "academicYears": {
+    "title": "إدارة السنوات الجامعية",
+    "subtitle": "إدارة السنوات الأكاديمية",
+    "addYear": "إضافة سنة جامعية",
+    "table": {
+      "yearName": "اسم السنة",
+      "startDate": "تاريخ البداية",
+      "endDate": "تاريخ النهاية",
+      "status": "الحالة",
+      "actions": "الإجراءات"
+    },
+    "status": {
+      "active": "نشطة",
+      "archived": "مؤرشفة"
+    },
+    "setActive": "تعيين كنشطة",
+    "archive": "أرشفة",
+    "unarchive": "إلغاء الأرشفة"
+  },
+
+  "notifications": {
+    "success": "نجح!",
+    "error": "خطأ!",
+    "warning": "تحذير!",
+    "info": "معلومة"
+  },
+
+  "validation": {
+    "required": "هذا الحقل مطلوب",
+    "invalidEmail": "البريد الإلكتروني غير صالح",
+    "minLength": "الحد الأدنى للطول هو {min} أحرف",
+    "maxLength": "الحد الأقصى للطول هو {max} حرفاً",
+    "invalidPhone": "رقم الهاتف غير صالح",
+    "passwordMismatch": "كلمات المرور غير متطابقة"
+  },
+
+  "footer": {
+    "allRightsReserved": "جميع الحقوق محفوظة",
+    "copyright": "© {year} منصة تكليف"
+  }
+}

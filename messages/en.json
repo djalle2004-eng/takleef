@@ -1,0 +1,186 @@
+{
+  "common": {
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "search": "Search",
+    "close": "Close",
+    "submit": "Submit",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "welcome": "Welcome",
+    "yes": "Yes",
+    "no": "No",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "add": "Add",
+    "view": "View",
+    "download": "Download",
+    "upload": "Upload",
+    "export": "Export",
+    "import": "Import",
+    "filter": "Filter",
+    "refresh": "Refresh"
+  },
+  
+  "auth": {
+    "signIn": {
+      "title": "Sign In to Takleef",
+      "subtitle": "Please enter your credentials",
+      "emailLabel": "Professional Email",
+      "emailPlaceholder": "professor@university.dz",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "signInButton": "Sign In",
+      "noAccount": "Don't have an account?",
+      "createAccount": "Create new account",
+      "forgotPassword": "Forgot password?"
+    },
+    "signUp": {
+      "title": "Create New Account",
+      "subtitle": "Join Takleef Platform",
+      "emailLabel": "University Email",
+      "emailHint": "Only @univ-eloued.dz email addresses are accepted",
+      "passwordLabel": "Password",
+      "passwordHint": "Must be at least 8 characters",
+      "confirmPasswordLabel": "Confirm Password",
+      "signUpButton": "Sign Up",
+      "hasAccount": "Already have an account?",
+      "signInLink": "Sign in"
+    },
+    "errors": {
+      "invalidEmail": "Invalid email address",
+      "invalidCredentials": "Invalid credentials",
+      "emailRequired": "Email is required",
+      "passwordRequired": "Password is required",
+      "weakPassword": "Password is too weak",
+      "emailExists": "Email already exists",
+      "passwordMismatch": "Passwords do not match"
+    },
+    "signOut": "Sign Out"
+  },
+
+  "profile": {
+    "title": "Complete Your Profile",
+    "subtitle": "Please fill in your personal information",
+    "personalInfo": "Personal Information",
+    "contactInfo": "Contact Information",
+    "academicInfo": "Academic Information",
+    "fields": {
+      "fullNameArabic": "Full Name (Arabic)",
+      "fullNameLatin": "Full Name (Latin)",
+      "academicRank": "Academic Rank",
+      "department": "Department",
+      "professionalEmail": "Professional Email",
+      "personalEmail": "Personal Email",
+      "primaryPhone": "Primary Phone",
+      "secondaryPhone": "Secondary Phone",
+      "phdSpecialization": "PhD Specialization",
+      "researchField": "Research Field"
+    },
+    "placeholders": {
+      "fullNameArabic": "Example: أحمد بن محمد",
+      "fullNameLatin": "Example: Ahmed Ben Mohamed",
+      "phone": "+213 555 123 456"
+    },
+    "ranks": {
+      "professor": "Professor",
+      "masterA": "Associate Professor A",
+      "masterB": "Associate Professor B",
+      "assistantA": "Assistant Professor A",
+      "assistantB": "Assistant Professor B"
+    },
+    "departments": {
+      "economics": "Economics Department",
+      "finance": "Finance and Accounting Department",
+      "management": "Management Sciences Department",
+      "commercial": "Commercial Sciences Department",
+      "common": "Common Core Department"
+    },
+    "saveButton": "Save Information",
+    "updateButton": "Update Information",
+    "successMessage": "Information saved successfully",
+    "errorMessage": "Failed to save information"
+  },
+
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome",
+    "welcomeMessage": "Welcome to your dashboard",
+    "quickActions": "Quick Actions",
+    "cards": {
+      "teachingPreferences": {
+        "title": "Teaching Preferences",
+        "description": "Select your preferred modules"
+      },
+      "reports": {
+        "title": "Reports",
+        "description": "Generate analytics reports"
+      },
+      "profile": {
+        "title": "Profile",
+        "description": "View your information"
+      }
+    },
+    "profileInfo": {
+      "title": "Profile Information",
+      "academicRank": "Academic Rank",
+      "department": "Department",
+      "professionalEmail": "Professional Email",
+      "personalEmail": "Personal Email",
+      "primaryPhone": "Primary Phone",
+      "secondaryPhone": "Secondary Phone",
+      "phdSpecialization": "PhD Specialization",
+      "researchField": "Research Field"
+    }
+  },
+
+  "adminNav": {
+    "adminPanel": "Admin Panel",
+    "dashboard": "Dashboard",
+    "academicYears": "Academic Years Management",
+    "modules": "Modules Management",
+    "users": "User Management",
+    "preferences": "View Preferences",
+    "reports": "Reports & Analytics",
+    "switchToProfessor": "Switch to Professor View",
+    "switchToAdmin": "Switch to Admin View"
+  },
+
+  "adminDashboard": {
+    "title": "Admin Dashboard",
+    "academicYear": "Academic Year",
+    "noActiveYear": "No active academic year",
+    "statistics": {
+      "totalProfessors": "Total Professors",
+      "totalModules": "Total Modules",
+      "active": "Active",
+      "totalPreferences": "Total Preferences",
+      "recentActivity": "Recent Activity",
+      "last7Days": "Last 7 days"
+    },
+    "charts": {
+      "preferencesByType": "Preferences by Teaching Type",
+      "mostRequestedModules": "Most Requested Modules",
+      "professorsByDepartment": "Professors by Department"
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "manageProfessors": "Manage Professors",
+      "manageProfessorsDesc": "Add, edit, or remove professors",
+      "manageModules": "Manage Modules",
+      "manageModulesDesc": "CRUD operations on modules",
+      "viewPreferences": "View Preferences",
+      "viewPreferencesDesc": "Review professor preferences",
+      "academicYears": "Academic Years",
+      "academicYearsDesc": "Manage academic years"
+    },
+    "reportsCard": {
+      "title": "Reports & Analytics",
+      "description": "Generate comprehensive reports with teaching load, coverage status, and department statistics"
+    }
+  }
+}
