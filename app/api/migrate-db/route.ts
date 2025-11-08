@@ -1,8 +1,26 @@
+export const runtime = 'nodejs';
+
 import { NextResponse } from 'next/server';
 import { sql } from '@/lib/db';
 
+const canRunInProduction = process.env.ALLOW_DB_MIGRATIONS === 'true';
+
 export async function POST() {
   try {
+    if (!process.env.DATABASE_URL) {
+      return NextResponse.json(
+        { error: 'Database connection is not configured' },
+        { status: 500 }
+      );
+    }
+
+    if (process.env.NODE_ENV === 'production' && !canRunInProduction) {
+      return NextResponse.json(
+        { error: 'Database migration endpoint is disabled in production.' },
+        { status: 403 }
+      );
+    }
+
     // Add role column to users table if it doesn't exist
     await sql`
       ALTER TABLE users 

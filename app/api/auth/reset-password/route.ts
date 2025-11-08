@@ -1,3 +1,5 @@
+export const runtime = 'nodejs';
+
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/lib/db';
 import { hashPassword } from '@/lib/auth';
@@ -5,6 +7,13 @@ import { resetPasswordSchema } from '@/lib/validations';
 
 export async function POST(request: NextRequest) {
   try {
+    if (!process.env.DATABASE_URL) {
+      return NextResponse.json(
+        { error: 'Database connection is not configured' },
+        { status: 500 }
+      );
+    }
+
     const body = await request.json();
     
     // Validate input

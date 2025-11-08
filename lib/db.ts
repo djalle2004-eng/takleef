@@ -1,10 +1,43 @@
 import { neon } from '@neondatabase/serverless';
 
-if (!process.env.DATABASE_URL) {
-  throw new Error('DATABASE_URL environment variable is not set');
+type NeonQueryFunction = ReturnType<typeof neon>;
+
+let sqlInstance: NeonQueryFunction | null = null;
+
+function resolveDatabaseUrl(): string | undefined {
+  if (process.env.DATABASE_URL) {
+    return process.env.DATABASE_URL;
+  }
+
+  if (process.env.NETLIFY_DATABASE_URL) {
+    return process.env.NETLIFY_DATABASE_URL;
+  }
+
+  if (process.env.NETLIFY_DATABASE_URL_UNPOOLED) {
+    return process.env.NETLIFY_DATABASE_URL_UNPOOLED;
+  }
+
+  return undefined;
 }
 
-export const sql = neon(process.env.DATABASE_URL);
+export function getSql(): NeonQueryFunction {
+  const connectionString = resolveDatabaseUrl();
+
+  if (!connectionString) {
+    throw new Error('DATABASE_URL environment variable is not set');
+  }
+
+  if (!sqlInstance) {
+    sqlInstance = neon(connectionString);
+  }
+
+  return sqlInstance;
+}
+
+export const sql: any = (...args: any[]) => {
+  const client = getSql();
+  return (client as any)(...args);
+};
 
 // Initialize database tables
 export async function initDatabase() {

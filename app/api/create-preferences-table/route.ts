@@ -1,8 +1,21 @@
+export const runtime = 'nodejs';
+
 import { NextResponse } from 'next/server';
 import { sql } from '@/lib/db';
 
+const canRunInProduction = process.env.ALLOW_CREATE_PREF_TABLE === 'true';
+
 export async function POST() {
   try {
+    if (process.env.NODE_ENV === 'production' && !canRunInProduction) {
+      return NextResponse.json(
+        {
+          error: 'This migration endpoint is disabled in production environments.',
+        },
+        { status: 403 }
+      );
+    }
+
     // Create preferences table
     await sql`
       CREATE TABLE IF NOT EXISTS preferences (
