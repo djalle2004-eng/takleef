@@ -7,6 +7,33 @@ const departmentSchema = z.object({
   name: z.string().min(1, 'Department name is required')
 });
 
+async function ensureHierarchyTables() {
+  await sql`
+    CREATE TABLE IF NOT EXISTS departments (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL UNIQUE,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  `;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS specialties (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      level VARCHAR(50) NOT NULL,
+      department_id INTEGER NOT NULL REFERENCES departments(id) ON DELETE CASCADE,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  `;
+
+  await sql`
+    ALTER TABLE modules 
+    ADD COLUMN IF NOT EXISTS specialty_id INTEGER REFERENCES specialties(id) ON DELETE SET NULL
+  `;
+}
+
 // GET - List all departments
 export async function GET() {
   try {
@@ -15,6 +42,8 @@ export async function GET() {
     if (!user || !isAdmin(user)) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+
+    await ensureHierarchyTables();
 
     const departments = await sql`
       SELECT d.*, 
@@ -43,6 +72,8 @@ export async function POST(request: NextRequest) {
     if (!user || !isAdmin(user)) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+
+    await ensureHierarchyTables();
 
     const body = await request.json();
     const validated = departmentSchema.parse(body);
