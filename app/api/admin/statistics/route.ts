@@ -2,6 +2,27 @@ import { NextResponse } from 'next/server';
 import { getCurrentUser, isAdmin } from '@/lib/auth';
 import { sql } from '@/lib/db';
 
+type PreferenceTypeRow = {
+  teaching_type: string;
+  count: string | number;
+};
+
+type ModuleRow = {
+  id: number;
+  module_name: string;
+  request_count: string | number;
+};
+
+type DepartmentRow = {
+  department: string;
+  count: string | number;
+};
+
+type ActivityRow = {
+  date: string;
+  count: string | number;
+};
+
 export async function GET() {
   try {
     const user = await getCurrentUser();
@@ -95,22 +116,22 @@ export async function GET() {
         totalPreferences: parseInt(preferencesCount[0]?.count || '0'),
       },
       activeYear: activeYear[0] || null,
-      preferencesByType: preferencesByType.map(row => ({
+      preferencesByType: preferencesByType.map((row: PreferenceTypeRow) => ({
         type: row.teaching_type,
-        count: parseInt(row.count)
+        count: Number(row.count)
       })),
-      topModules: topModules.map(row => ({
+      topModules: topModules.map((row: ModuleRow) => ({
         id: row.id,
         name: row.module_name,
-        requestCount: parseInt(row.request_count)
+        requestCount: Number(row.request_count)
       })),
-      professorsByDepartment: professorsByDept.map(row => ({
+      professorsByDepartment: professorsByDept.map((row: DepartmentRow) => ({
         department: row.department,
-        count: parseInt(row.count)
+        count: Number(row.count)
       })),
-      recentActivity: recentActivity.map(row => ({
+      recentActivity: recentActivity.map((row: ActivityRow) => ({
         date: row.date,
-        count: parseInt(row.count)
+        count: Number(row.count)
       }))
     };
 
