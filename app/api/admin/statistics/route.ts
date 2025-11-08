@@ -23,6 +23,35 @@ type ActivityRow = {
   count: string | number;
 };
 
+function normalizeRows<T>(result: any): T[] {
+  if (!result) {
+    return [];
+  }
+
+  if (Array.isArray(result)) {
+    return result as T[];
+  }
+
+  if (Array.isArray(result?.rows)) {
+    return result.rows as T[];
+  }
+
+  return [];
+}
+
+function toNumber(value: string | number | undefined | null): number {
+  if (value === null || value === undefined) {
+    return 0;
+  }
+
+  if (typeof value === 'number') {
+    return value;
+  }
+
+  const parsed = Number(value);
+  return Number.isNaN(parsed) ? 0 : parsed;
+}
+
 export async function GET() {
   try {
     const user = await getCurrentUser();
@@ -32,33 +61,33 @@ export async function GET() {
     }
 
     // Get total professors count
-    const professorsCount = await sql`
+    const professorsCountResult = await sql`
       SELECT COUNT(*) as count 
       FROM users 
       WHERE role = 'PROFESSOR'
     `;
 
     // Get total modules count
-    const modulesCount = await sql`
+    const modulesCountResult = await sql`
       SELECT COUNT(*) as count 
       FROM modules
     `;
 
     // Get active modules count
-    const activeModulesCount = await sql`
+    const activeModulesCountResult = await sql`
       SELECT COUNT(*) as count 
       FROM modules 
       WHERE is_active_for_current_year = true
     `;
 
     // Get preferences count by status
-    const preferencesCount = await sql`
+    const preferencesCountResult = await sql`
       SELECT COUNT(*) as count 
       FROM preferences
     `;
 
     // Get active academic year
-    const activeYear = await sql`
+    const activeYearResult = await sql`
       SELECT id, year_name 
       FROM academic_years 
       WHERE is_active = true 
@@ -66,7 +95,7 @@ export async function GET() {
     `;
 
     // Get preferences by teaching type
-    const preferencesByType = await sql`
+    const preferencesByTypeResult = await sql`
       SELECT 
         teaching_type,
         COUNT(*) as count
@@ -75,7 +104,7 @@ export async function GET() {
     `;
 
     // Get top 5 most requested modules
-    const topModules = await sql`
+    const topModulesResult = await sql`
       SELECT 
         m.module_name,
         m.id,
@@ -88,17 +117,16 @@ export async function GET() {
     `;
 
     // Get professors by department
-    const professorsByDept = await sql`
+    const professorsByDeptResult = await sql`
       SELECT 
         department,
         COUNT(*) as count
       FROM professors
       GROUP BY department
-      ORDER BY count DESC
     `;
 
     // Get preferences activity over time (last 7 days)
-    const recentActivity = await sql`
+    const recentActivityResult = await sql`
       SELECT 
         DATE(created_at) as date,
         COUNT(*) as count
@@ -108,30 +136,40 @@ export async function GET() {
       ORDER BY date DESC
     `;
 
+    const professorsCount = normalizeRows<{ count: string | number }>(professorsCountResult);
+    const modulesCount = normalizeRows<{ count: string | number }>(modulesCountResult);
+    const activeModulesCount = normalizeRows<{ count: string | number }>(activeModulesCountResult);
+    const preferencesCount = normalizeRows<{ count: string | number }>(preferencesCountResult);
+    const activeYear = normalizeRows<{ id: number; year_name: string }>(activeYearResult);
+    const preferencesByType = normalizeRows<PreferenceTypeRow>(preferencesByTypeResult);
+    const topModules = normalizeRows<ModuleRow>(topModulesResult);
+    const professorsByDept = normalizeRows<DepartmentRow>(professorsByDeptResult);
+    const recentActivity = normalizeRows<ActivityRow>(recentActivityResult);
+
     const statistics = {
       overview: {
-        totalProfessors: parseInt(professorsCount[0]?.count || '0'),
-        totalModules: parseInt(modulesCount[0]?.count || '0'),
-        activeModules: parseInt(activeModulesCount[0]?.count || '0'),
-        totalPreferences: parseInt(preferencesCount[0]?.count || '0'),
+        totalProfessors: toNumber(professorsCount[0]?.count),
+        totalModules: toNumber(modulesCount[0]?.count),
+        activeModules: toNumber(activeModulesCount[0]?.count),
+        totalPreferences: toNumber(preferencesCount[0]?.count),
       },
       activeYear: activeYear[0] || null,
       preferencesByType: preferencesByType.map((row: PreferenceTypeRow) => ({
         type: row.teaching_type,
-        count: Number(row.count)
+        count: toNumber(row.count)
       })),
       topModules: topModules.map((row: ModuleRow) => ({
         id: row.id,
         name: row.module_name,
-        requestCount: Number(row.request_count)
+        requestCount: toNumber(row.request_count)
       })),
       professorsByDepartment: professorsByDept.map((row: DepartmentRow) => ({
         department: row.department,
-        count: Number(row.count)
+        count: toNumber(row.count)
       })),
       recentActivity: recentActivity.map((row: ActivityRow) => ({
         date: row.date,
-        count: Number(row.count)
+        count: toNumber(row.count)
       }))
     };
 
