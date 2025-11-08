@@ -52,6 +52,19 @@ function toNumber(value: string | number | undefined | null): number {
   return Number.isNaN(parsed) ? 0 : parsed;
 }
 
+async function safeQuery<T>(
+  queryPromise: Promise<T>,
+  fallback: T,
+  context: string
+): Promise<T> {
+  try {
+    return await queryPromise;
+  } catch (error) {
+    console.error(`[admin/statistics] ${context} query failed`, error);
+    return fallback;
+  }
+}
+
 export async function GET() {
   try {
     const user = await getCurrentUser();
@@ -61,50 +74,75 @@ export async function GET() {
     }
 
     // Get total professors count
-    const professorsCountResult = await sql`
+    const professorsCountResult = await safeQuery(
+      sql`
       SELECT COUNT(*) as count 
       FROM users 
       WHERE role = 'PROFESSOR'
-    `;
+    `,
+      [] as any,
+      'professorsCount'
+    );
 
     // Get total modules count
-    const modulesCountResult = await sql`
+    const modulesCountResult = await safeQuery(
+      sql`
       SELECT COUNT(*) as count 
       FROM modules
-    `;
+    `,
+      [] as any,
+      'modulesCount'
+    );
 
     // Get active modules count
-    const activeModulesCountResult = await sql`
+    const activeModulesCountResult = await safeQuery(
+      sql`
       SELECT COUNT(*) as count 
       FROM modules 
       WHERE is_active_for_current_year = true
-    `;
+    `,
+      [] as any,
+      'activeModulesCount'
+    );
 
     // Get preferences count by status
-    const preferencesCountResult = await sql`
+    const preferencesCountResult = await safeQuery(
+      sql`
       SELECT COUNT(*) as count 
       FROM preferences
-    `;
+    `,
+      [] as any,
+      'preferencesCount'
+    );
 
     // Get active academic year
-    const activeYearResult = await sql`
+    const activeYearResult = await safeQuery(
+      sql`
       SELECT id, year_name 
       FROM academic_years 
       WHERE is_active = true 
       LIMIT 1
-    `;
+    `,
+      [] as any,
+      'activeYear'
+    );
 
     // Get preferences by teaching type
-    const preferencesByTypeResult = await sql`
+    const preferencesByTypeResult = await safeQuery(
+      sql`
       SELECT 
         teaching_type,
         COUNT(*) as count
       FROM preferences
       GROUP BY teaching_type
-    `;
+    `,
+      [] as any,
+      'preferencesByType'
+    );
 
     // Get top 5 most requested modules
-    const topModulesResult = await sql`
+    const topModulesResult = await safeQuery(
+      sql`
       SELECT 
         m.module_name,
         m.id,
@@ -114,19 +152,27 @@ export async function GET() {
       GROUP BY m.id, m.module_name
       ORDER BY request_count DESC
       LIMIT 5
-    `;
+    `,
+      [] as any,
+      'topModules'
+    );
 
     // Get professors by department
-    const professorsByDeptResult = await sql`
+    const professorsByDeptResult = await safeQuery(
+      sql`
       SELECT 
         department,
         COUNT(*) as count
       FROM professors
       GROUP BY department
-    `;
+    `,
+      [] as any,
+      'professorsByDept'
+    );
 
     // Get preferences activity over time (last 7 days)
-    const recentActivityResult = await sql`
+    const recentActivityResult = await safeQuery(
+      sql`
       SELECT 
         DATE(created_at) as date,
         COUNT(*) as count
@@ -134,7 +180,10 @@ export async function GET() {
       WHERE created_at >= CURRENT_DATE - INTERVAL '7 days'
       GROUP BY DATE(created_at)
       ORDER BY date DESC
-    `;
+    `,
+      [] as any,
+      'recentActivity'
+    );
 
     const professorsCount = normalizeRows<{ count: string | number }>(professorsCountResult);
     const modulesCount = normalizeRows<{ count: string | number }>(modulesCountResult);
