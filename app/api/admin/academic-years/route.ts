@@ -59,6 +59,27 @@ export async function POST(request: NextRequest) {
 
     const academicYear = result[0];
 
+    // Ensure semesters table exists before inserting default semesters
+    await sql`
+      CREATE TABLE IF NOT EXISTS semesters (
+        id SERIAL PRIMARY KEY,
+        semester_name VARCHAR(50) NOT NULL,
+        semester_number INTEGER NOT NULL,
+        academic_year_id INTEGER NOT NULL REFERENCES academic_years(id) ON DELETE CASCADE,
+        start_date DATE,
+        end_date DATE,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(academic_year_id, semester_number)
+      )
+    `;
+
+    // Ensure modules table can link to semesters (backward compatibility)
+    await sql`
+      ALTER TABLE modules 
+      ADD COLUMN IF NOT EXISTS semester_id INTEGER REFERENCES semesters(id) ON DELETE SET NULL
+    `;
+
     // Automatically create two semesters for this academic year
     const startDate = new Date(validatedData.startDate);
     const endDate = new Date(validatedData.endDate);
