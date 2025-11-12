@@ -21,9 +21,14 @@ interface Preference {
   department: string;
   module_name: string;
   specialty_name: string;
+  specialty_level?: string;
+  specialty_department?: string;
+  semester?: string | null;
   year_name: string;
   priority: number;
   teaching_type: string;
+  has_taught_before?: boolean;
+  years_experience?: number | null;
 }
 
 const teachingTypeLabels: Record<string, string> = {
