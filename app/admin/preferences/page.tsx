@@ -117,6 +117,8 @@ export default function AdminPreferencesPage() {
     module_id: parseInt(id),
     module_name: prefs[0].module_name,
     specialty_name: prefs[0].specialty_name,
+    specialty_department: prefs[0].specialty_department || '',
+    semester: prefs[0].semester ?? '',
     professors: prefs.sort((a, b) => a.priority - b.priority),
   }));
 
@@ -132,6 +134,10 @@ export default function AdminPreferencesPage() {
         'Priority': pref.priority,
         'Module': pref.module_name,
         'Specialty': pref.specialty_name,
+        'Specialty Department': pref.specialty_department ?? '',
+        'Semester': pref.semester ?? '',
+        'Has Taught Before': pref.has_taught_before === true ? 'Yes' : 'No',
+        'Years of Experience': pref.years_experience ?? '',
         'Teaching Type': teachingTypeLabels[pref.teaching_type],
       }))
     );
@@ -150,12 +156,16 @@ export default function AdminPreferencesPage() {
       mod.professors.map((prof) => ({
         'Module': mod.module_name,
         'Specialty': mod.specialty_name,
+        'Specialty Department': mod.specialty_department || prof.specialty_department || '',
+        'Semester': mod.semester ?? prof.semester ?? '',
         'Professor Name': prof.full_name_latin,
         'Arabic Name': prof.full_name_arabic || '',
         'Email': prof.email,
         'Academic Rank': prof.academic_rank || '',
         'Department': prof.department || '',
         'Priority': prof.priority,
+        'Has Taught Before': prof.has_taught_before === true ? 'Yes' : 'No',
+        'Years of Experience': prof.years_experience ?? '',
         'Teaching Type': teachingTypeLabels[prof.teaching_type],
       }))
     );
@@ -371,6 +381,9 @@ export default function AdminPreferencesPage() {
                           <p className="text-sm text-gray-600 dark:text-gray-400" dir="rtl">
                             {mod.specialty_name}
                           </p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400" dir="rtl">
+                            {mod.specialty_department} • {mod.semester || 'غير محدد'}
+                          </p>
                         </div>
                         <div className="flex items-center space-x-3">
                           <span className="px-3 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 rounded-full text-sm font-semibold">
@@ -402,6 +415,9 @@ export default function AdminPreferencesPage() {
                             </h3>
                             <p className="text-gray-600 dark:text-gray-400" dir="rtl">
                               {mod.specialty_name}
+                            </p>
+                            <p className="text-sm text-gray-500 dark:text-gray-400" dir="rtl">
+                              {mod.specialty_department} • {mod.semester || 'غير محدد'}
                             </p>
                           </div>
                           <h4 className="font-semibold text-gray-900 dark:text-white mb-3">
