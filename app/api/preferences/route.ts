@@ -3,6 +3,123 @@ import { getCurrentUser } from '@/lib/auth';
 import { sql } from '@/lib/db';
 import { z } from 'zod';
 
+async function ensureHierarchyTables() {
+  await sql`
+    CREATE TABLE IF NOT EXISTS departments (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL UNIQUE,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  `;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS specialties (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      level VARCHAR(50) NOT NULL,
+      department_id INTEGER NOT NULL REFERENCES departments(id) ON DELETE CASCADE,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  `;
+}
+
+async function ensureModulesSchema() {
+  await ensureHierarchyTables();
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS modules (
+      id SERIAL PRIMARY KEY,
+      module_name VARCHAR(255),
+      study_level VARCHAR(50),
+      specialty_id INTEGER REFERENCES specialties(id) ON DELETE SET NULL,
+      semester VARCHAR(10),
+      is_active_for_current_year BOOLEAN DEFAULT TRUE,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  `;
+
+  await sql`
+    ALTER TABLE modules
+    ADD COLUMN IF NOT EXISTS module_name VARCHAR(255)
+  `;
+
+  await sql`
+    ALTER TABLE modules
+    ADD COLUMN IF NOT EXISTS study_level VARCHAR(50)
+  `;
+
+  await sql`
+    ALTER TABLE modules
+    ADD COLUMN IF NOT EXISTS specialty_id INTEGER REFERENCES specialties(id) ON DELETE SET NULL
+  `;
+
+  await sql`
+    ALTER TABLE modules
+    ADD COLUMN IF NOT EXISTS semester VARCHAR(10)
+  `;
+
+  await sql`
+    ALTER TABLE modules
+    ADD COLUMN IF NOT EXISTS is_active_for_current_year BOOLEAN DEFAULT TRUE
+  `;
+
+  await sql`
+    ALTER TABLE modules
+    ADD COLUMN IF NOT EXISTS created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  `;
+
+  await sql`
+    ALTER TABLE modules
+    ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  `;
+}
+
+async function ensurePreferencesSchema() {
+  await ensureModulesSchema();
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS academic_years (
+      id SERIAL PRIMARY KEY,
+      year_name VARCHAR(100) NOT NULL,
+      start_date DATE NOT NULL,
+      end_date DATE NOT NULL,
+      is_active BOOLEAN DEFAULT FALSE,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  `;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS preferences (
+      id SERIAL PRIMARY KEY,
+      professor_id INTEGER NOT NULL,
+      module_id INTEGER NOT NULL REFERENCES modules(id) ON DELETE CASCADE,
+      academic_year_id INTEGER NOT NULL REFERENCES academic_years(id) ON DELETE CASCADE,
+      priority INTEGER NOT NULL,
+      teaching_type VARCHAR(20) NOT NULL,
+      has_taught_before BOOLEAN DEFAULT FALSE,
+      years_experience INTEGER DEFAULT 0,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  `;
+}
+
+function parseAcademicYearId(raw: string | null) {
+  if (!raw) {
+    return null;
+  }
+
+  const value = Number.parseInt(raw, 10);
+  if (Number.isNaN(value)) {
+    throw new Error('INVALID_ACADEMIC_YEAR_ID');
+  }
+
+  return value;
+}
+
 const preferenceSchema = z
   .object({
     moduleId: z.number(),
@@ -45,10 +162,24 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { searchParams } = new URL(request.url);
-    const academicYearId = searchParams.get('academicYearId');
+    await ensurePreferencesSchema();
 
-    if (!academicYearId) {
+    const { searchParams } = new URL(request.url);
+
+    let academicYearId: number | null = null;
+    try {
+      academicYearId = parseAcademicYearId(searchParams.get('academicYearId'));
+    } catch (error: any) {
+      if (error.message === 'INVALID_ACADEMIC_YEAR_ID') {
+        return NextResponse.json(
+          { error: 'Invalid academicYearId parameter' },
+          { status: 400 }
+        );
+      }
+      throw error;
+    }
+
+    if (academicYearId === null) {
       return NextResponse.json(
         { error: 'Academic year ID is required' },
         { status: 400 }
@@ -68,13 +199,21 @@ export async function GET(request: NextRequest) {
       JOIN specialties sp ON m.specialty_id = sp.id
       JOIN departments d ON sp.department_id = d.id
       WHERE p.professor_id = ${user.userId}
-        AND p.academic_year_id = ${parseInt(academicYearId)}
+        AND p.academic_year_id = ${academicYearId}
       ORDER BY p.priority
     `;
 
     return NextResponse.json({ preferences }, { status: 200 });
   } catch (error: any) {
     console.error('Get preferences error:', error);
+
+    if (error?.message === 'INVALID_ACADEMIC_YEAR_ID') {
+      return NextResponse.json(
+        { error: 'Invalid academicYearId parameter' },
+        { status: 400 }
+      );
+    }
+
     return NextResponse.json(
       { error: 'Failed to fetch preferences' },
       { status: 500 }
@@ -90,6 +229,8 @@ export async function POST(request: NextRequest) {
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+
+    await ensurePreferencesSchema();
 
     const body = await request.json();
     const validatedData = preferenceSchema.parse(body);
@@ -178,6 +319,8 @@ export async function DELETE(request: NextRequest) {
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+
+    await ensurePreferencesSchema();
 
     const { searchParams } = new URL(request.url);
     const preferenceId = searchParams.get('id');
