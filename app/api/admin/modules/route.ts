@@ -168,6 +168,19 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const validatedData = moduleSchema.parse(body);
 
+    if (validatedData.specialtyId !== undefined && validatedData.specialtyId !== null) {
+      const specialtyExists = await sql`
+        SELECT id FROM specialties WHERE id = ${validatedData.specialtyId}
+      `;
+
+      if (specialtyExists.length === 0) {
+        return NextResponse.json(
+          { error: 'Specialty not found for the provided specialtyId.' },
+          { status: 404 }
+        );
+      }
+    }
+
     const result = await sql`
       INSERT INTO modules (
         module_name, 
@@ -205,6 +218,13 @@ export async function POST(request: NextRequest) {
     if (error?.message === 'INVALID_SPECIALTY_ID') {
       return NextResponse.json(
         { error: 'Invalid specialtyId parameter' },
+        { status: 400 }
+      );
+    }
+
+    if (error?.code === '23503') {
+      return NextResponse.json(
+        { error: 'Cannot create module because the related specialty does not exist.' },
         { status: 400 }
       );
     }
