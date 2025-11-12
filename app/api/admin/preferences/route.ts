@@ -29,14 +29,17 @@ export async function GET(request: NextRequest) {
           prof.academic_rank,
           prof.department,
           m.module_name,
+          m.semester,
           sp.name as specialty_name,
           sp.level as specialty_level,
+          d.name as specialty_department,
           ay.year_name
         FROM preferences p
         JOIN users u ON p.professor_id = u.id
         LEFT JOIN professors prof ON u.id = prof.user_id
         JOIN modules m ON p.module_id = m.id
         JOIN specialties sp ON m.specialty_id = sp.id
+        LEFT JOIN departments d ON sp.department_id = d.id
         JOIN academic_years ay ON p.academic_year_id = ay.id
         WHERE p.module_id = ${parseInt(moduleId)}
         ${academicYearId ? sql`AND p.academic_year_id = ${parseInt(academicYearId)}` : sql``}
@@ -51,12 +54,12 @@ export async function GET(request: NextRequest) {
           m.semester,
           sp.name as specialty_name,
           sp.level as specialty_level,
-          d.name as department_name,
+          d.name as specialty_department,
           ay.year_name
         FROM preferences p
         JOIN modules m ON p.module_id = m.id
         JOIN specialties sp ON m.specialty_id = sp.id
-        JOIN departments d ON sp.department_id = d.id
+        LEFT JOIN departments d ON sp.department_id = d.id
         JOIN academic_years ay ON p.academic_year_id = ay.id
         WHERE p.professor_id = ${parseInt(professorId)}
         ${academicYearId ? sql`AND p.academic_year_id = ${parseInt(academicYearId)}` : sql``}
@@ -70,14 +73,20 @@ export async function GET(request: NextRequest) {
           u.email,
           prof.full_name_latin,
           prof.full_name_arabic,
+          prof.academic_rank,
+          prof.department,
           m.module_name,
+          m.semester,
           sp.name as specialty_name,
+          sp.level as specialty_level,
+          d.name as specialty_department,
           ay.year_name
         FROM preferences p
         JOIN users u ON p.professor_id = u.id
         LEFT JOIN professors prof ON u.id = prof.user_id
         JOIN modules m ON p.module_id = m.id
         JOIN specialties sp ON m.specialty_id = sp.id
+        LEFT JOIN departments d ON sp.department_id = d.id
         JOIN academic_years ay ON p.academic_year_id = ay.id
         ${academicYearId ? sql`WHERE p.academic_year_id = ${parseInt(academicYearId)}` : sql``}
         ORDER BY ay.year_name DESC, prof.full_name_latin, p.priority

@@ -329,6 +329,9 @@ export default function AdminPreferencesPage() {
                                     <p className="text-sm text-gray-600 dark:text-gray-400" dir="rtl">
                                       {pref.specialty_name}
                                     </p>
+                                    <p className="text-xs text-gray-500 dark:text-gray-400" dir="rtl">
+                                      {pref.specialty_department} • {pref.semester || 'غير محدد'}
+                                    </p>
                                   </div>
                                 </div>
                                 <div className="px-4 py-2 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-lg font-medium" dir="rtl">
