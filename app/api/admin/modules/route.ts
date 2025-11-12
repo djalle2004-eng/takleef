@@ -3,7 +3,31 @@ import { getCurrentUser, isAdmin } from '@/lib/auth';
 import { sql } from '@/lib/db';
 import { moduleSchema } from '@/lib/validations';
 
+async function ensureHierarchyTables() {
+  await sql`
+    CREATE TABLE IF NOT EXISTS departments (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL UNIQUE,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  `;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS specialties (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      level VARCHAR(50) NOT NULL,
+      department_id INTEGER NOT NULL REFERENCES departments(id) ON DELETE CASCADE,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  `;
+}
+
 async function ensureModulesSchema() {
+  await ensureHierarchyTables();
+
   await sql`
     CREATE TABLE IF NOT EXISTS modules (
       id SERIAL PRIMARY KEY,
