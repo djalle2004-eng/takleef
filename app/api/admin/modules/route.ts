@@ -75,6 +75,45 @@ async function ensureModulesSchema() {
     ALTER TABLE modules
     ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   `;
+
+  await sql`
+    ALTER TABLE modules
+    DROP COLUMN IF EXISTS module_code,
+    DROP COLUMN IF EXISTS module_name_arabic,
+    DROP COLUMN IF EXISTS module_name_english,
+    DROP COLUMN IF EXISTS credits,
+    DROP COLUMN IF EXISTS department,
+    DROP COLUMN IF EXISTS academic_year_id,
+    DROP COLUMN IF EXISTS semester_id,
+    DROP COLUMN IF EXISTS is_active
+  `;
+
+  const semesterColumn = await sql`
+    SELECT data_type, is_nullable
+    FROM information_schema.columns
+    WHERE table_name = 'modules' AND column_name = 'semester'
+  `;
+
+  if (semesterColumn.length > 0) {
+    const { data_type: dataType, is_nullable: isNullable } = semesterColumn[0] as {
+      data_type: string;
+      is_nullable: string;
+    };
+
+    if (dataType !== 'character varying') {
+      await sql`
+        ALTER TABLE modules
+        ALTER COLUMN semester TYPE VARCHAR(10) USING semester::VARCHAR(10)
+      `;
+    }
+
+    if (isNullable === 'NO') {
+      await sql`
+        ALTER TABLE modules
+        ALTER COLUMN semester DROP NOT NULL
+      `;
+    }
+  }
 }
 
 function parseSpecialtyId(param: string | null) {
